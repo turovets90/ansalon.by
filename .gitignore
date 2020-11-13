@@ -1,0 +1,6 @@
+.idea
+lib/
+*.pug
+inc/
+design/
+.DS_Store
