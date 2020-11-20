@@ -1,6 +1,25 @@
 $(document).ready(function(){
 
-    $('.main_menu .arrow').click(function () {
+    /* перевод картинки svg в код */
+    $('.icon img, img.icon').each(function(){
+        var $img = $(this);
+        var imgClass = $img.attr('class');
+        var imgURL = $img.attr('src');
+        $.get(imgURL, function(data) {
+            var $svg = $(data).find('svg');
+            if(typeof imgClass !== 'undefined') {
+                $svg = $svg.attr('class', imgClass+' replaced-svg');
+            }
+            $svg = $svg.removeAttr('xmlns:a');
+            if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+                $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+            }
+            $img.replaceWith($svg);
+        }, 'xml');
+    });
+    /* end перевод картинки svg в код */
+
+    $('.nav .arrow').click(function () {
         $(this).next().slideToggle();
         $(this).toggleClass('act');
     });
@@ -24,25 +43,46 @@ $(document).ready(function(){
     });
 
 
+    if($(window).innerWidth()> 767){
+
+        $('.main_slider').on('init', function(event, slick) {
+
+            var dotsClone = ''
+            jQuery(".main_slider ul.slick-dots li").each(function(t) {
+                var counter = t+1;
+                dotsClone = dotsClone + '<li class="dot-' + jQuery(this).index() + '" data-slick-index="' + jQuery(this).index() + '"> '+ 0 + counter + '</li>'
+            });
+
+            var dotsCloneElement = document.createElement('ul');
+            dotsCloneElement.className = 'slick-dots-clone slick-dots';
+            dotsCloneElement.innerHTML = dotsClone;
+
+            jQuery('main .slick-dots').addClass('slick-dots-original');
+
+            jQuery('main .slick-slider').append(dotsCloneElement);
+
+            jQuery('.slick-dots-clone li').click(function() {
+                var slickIndex = jQuery(this).data('slick-index');
+                jQuery('.slick-dots-clone li').removeClass('slick-active');
+                jQuery(this).addClass('slick-active');
+
+                jQuery('.slick-dots-original li').eq(slickIndex).click();
+            });
+
+            setInterval(function() {
+                jQuery(".slick-dots-original li").each(function() {
+                    if (jQuery(this).hasClass('slick-active')) {
+                        var slickIndex = (jQuery(this).find('button').text() -1);
+                        jQuery('.slick-dots-clone li').removeClass('slick-active');
+                        jQuery('.slick-dots-clone li').eq(slickIndex).addClass('slick-active');
+                    }
+                });
+            }, 100);
+
+        });
 
 
-    /*
-    $('.c_subnav .arrow').click(function () {
-        $(this).next().slideToggle();
-        $(this).parent().toggleClass('active');
-    });
-
-    $('.c_btn').click(function(e){
-        if($(window).innerWidth() < 992){
-            e.preventDefault();
-            $(this).next().slideToggle();
-        }else{
-            $('.c_subnav_d').slideToggle();
-        }
-    });
-
-
-
+    }
 
 
     $(".main_slider").slick({
@@ -52,53 +92,46 @@ $(document).ready(function(){
         autoplay: false,
         //speed: 1000,
         slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToScroll: 1,
     });
 
 
+    $('.product_slider').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        //fade: true,
+        asNavFor: '.product_slider_nav'
+    });
+    $('.product_slider_nav').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        asNavFor: '.product_slider',
+        dots: false,
+        arrows:true,
+        //centerMode: true,
+        focusOnSelect: true,
+        vertical:true,
+        responsive: [
+            {
+                breakpoint: 767,
 
-
-    $('.range_values').each(function(){
-        var range=$(this).find('.range');
-        var rub_left=$(this).find('.rub_left');
-        var rub_right=$(this).find('.rub_right');
-        var tasks_status1=$(this).find('.tasks_status1');
-        var tasks_status2=$(this).find('.tasks_status2');
-        $(range).slider({
-            range: true,
-            min: 0,
-            max: 350,
-            values: [0, 150],
-            step: 1,
-            slide: function(event, ui) {
-                $(rub_left).text(ui.values[0] );
-                $(rub_right).text(ui.values[1] );
-                $(tasks_status1).val( ui.values[0] );
-                $(tasks_status2).val( ui.values[1] );
+                settings: {
+                    slidesToShow: 2
+                }
             }
-        });
-        $(rub_left).text($(range).slider("values", 0));
-        $(rub_right).text($(range).slider("values", 1));
-    });
-
-    $(document).on("change","input[class=tasks_status1]", function() {
-        $(this).closest('.range_values').find('.range').slider('values',0,$(this).val());
-        $(this).closest('.range_values').find('.rub_left').text($('.range').slider("values", 0));
-    });
-    $(document).on("change","input[class=tasks_status2]", function() {
-        $(this).closest('.range_values').find('.range').slider('values',1,$(this).val());
-        $(this).closest('.range_values').find('.rub_right').text($('.range').slider("values", 1) );
+        ]
     });
 
 
-    $('.filter_box_title').click(function () {
-        $('.filter_form').slideToggle();
+    $('.threeD_toggler').click(function(){
+        $('.product_slider_box').addClass('show_3d');
     });
-    $('.filter_title').click(function () {
-        $(this).next().slideToggle();
+    $('.product_slider_nav').click(function(){
+        $('.product_slider_box').removeClass('show_3d');
     });
 
-     */
+
 
 
 });
