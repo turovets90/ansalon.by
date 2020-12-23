@@ -919,8 +919,6 @@ blockquote
 footer
   background: #303030
   padding: 75px 0
-  @media (max-width: 575px)
-    padding: 30px 0
 
   a
     color: #fff
@@ -1066,15 +1064,16 @@ footer
 
 .page_banner
   position: relative
-  min-height: 220px
+  min-height: 300px
   background-position: center
   background-size: cover
   +flex
   +ai-center
   padding: 30px 0
-
+  @media (max-width: 1200px)
+    min-height: 250px
   @media (max-width: 991px)
-    min-height: 180px
+    min-height: 200px
   @media (max-width: 767px)
     min-height: 100px
   &:before
@@ -1161,6 +1160,9 @@ footer
   @media (max-width: 767px)
     padding: 30px 0
   .category_list
+    margin-bottom: 35px
+    @media (max-width: 1200px)
+      margin-bottom: 20px
     > div
       margin-bottom: 30px
       @media (max-width: 767px)
@@ -1199,6 +1201,9 @@ footer
 
 
 .subcat_list
+  margin-bottom: 50px
+  @media (max-width: 1200px)
+    margin-bottom: 30px
   .subcat_item
     position: relative
     min-height: 180px
@@ -1579,7 +1584,7 @@ footer
         color: #fff
 
 .tab-content_product
-  border: 2px solid #E8E8E8
+  //border: 2px solid #E8E8E8
   border-top: 0
   .tab-pane
     padding: 35px 35px 20px
@@ -1796,3 +1801,123 @@ footer
       background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='17' height='17' viewBox='0 0 17 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 1L16 16' stroke='%23ffab00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3cpath d='M16 1L1 16' stroke='%23ffab00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e ")
 
 
+.page_pagination
+  +flex
+  +ai-center
+  +j-beetween
+  background: #EEEEEE
+  padding: 15px 25px
+  @media (max-width: 575px)
+    +wrap
+    +j-start
+    padding: 10px
+  span
+    font-size: 12px
+    @media (max-width: 575px)
+      width: 100%
+      display: inline-block
+      margin-bottom: 20px
+  .custom_pagination
+    +flex
+    +ai-center
+    @media (max-width: 575px)
+      width: 100%
+    li
+      + li
+        margin-left: 3px
+      a
+        +flex
+        +ai-center
+        +j-center
+        width: 25px
+        height: 25px
+        +border-radius(2px)
+        text-decoration: none
+        color: #000
+        font-size: 16px
+        &.active
+          background: #000
+          color: #fff
+        &:hover
+          text-decoration: none
+          background: $orange
+          color: #fff
+        &.page_prev, &.page_next
+          position: relative
+          background: #fff
+          border: 1px solid #C4C4C4
+          &:hover
+            border: 1px solid $orange
+            background: $orange
+          &:before
+            +b_a
+            +m_a
+            width: 7px
+            height: 10px
+          &.page_prev
+            &:hover
+              &:before
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='7' height='10' viewBox='0 0 7 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M6 9L1 5L6 1' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e ")
+            &:before
+              background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='7' height='10' viewBox='0 0 7 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M6 9L1 5L6 1' stroke='%23777777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e ")
+          &.page_next
+            &:hover
+              &:before
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='7' height='10' viewBox='0 0 7 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 1L6 5L1 9' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e ")
+            &:before
+              background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='7' height='10' viewBox='0 0 7 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 1L6 5L1 9' stroke='%23777777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e ")
+.product_item
+  +transition($transition_default)
+  margin-bottom: 5px
+  &:hover
+    +box-shadow(1px 2px 30px rgba(0, 0, 0, 0.17))
+    .product_item_content
+      .btn_default
+        background: $orange
+        color: #fff
+  .img_thumbnail
+    width: 100%
+    height: 290px
+    background: #FFFFFF
+    border: 2px solid #E8E8E8
+    +flex
+    +ai-center
+    +j-center
+  .product_item_content
+    text-align: center
+    padding: 16px 15px 20px
+    .product_item_name
+      display: -webkit-box
+      -webkit-box-orient: vertical
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: normal
+      -webkit-line-clamp: 1
+      font-size: 16px
+      margin-bottom: 13px
+    .price
+      font-size: 16px
+      font-weight: 700
+      margin-bottom: 13px
+    .btn_default
+      margin: auto
+      border: 2px solid $orange
+      background: #fff
+      color: $orange
+      &:hover
+        background: $orange
+        color: #fff
+
+
+
+.product_list
+  margin-bottom: 50px
+  @media (max-width: 1200px)
+    margin-bottom: 20px
+
+
+.tab-content_product
+  .tab-pane
+    &#dop
+      padding-left: 0
+      padding-right: 0
